@@ -15,7 +15,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the page.
 Main code lives in `src/`:
 - `src/app/` — Next.js app routes and pages
 - `src/components/` — UI components and layout
-- `src/lib/` — small utilities and data
+- `src/hooks/` — Custom React hooks for shared logic
+- `src/lib/` — Small utilities and data
 
 ## Code License
 This repository is licensed through the `GNU AFFERO GENERAL PUBLIC LICENSE`. More details are listed [here](https://github.com/VeridianDev/veridian-frontend/blob/main/LICENSE). 
