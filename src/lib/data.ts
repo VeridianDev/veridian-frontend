@@ -2,11 +2,11 @@
 export const features = [
   {
     title: "Powerful Score Generation",
-  description: "Our advanced algorithms analyze companies to generate a comprehensive sustainability score, giving you instant insights.",
+    description: "Our advanced algorithms analyze companies to generate a comprehensive sustainability score, giving you instant insights.",
   },
   {
-  title: "Comprehensive Company Scan",
-  description: "Go beyond the surface. Veridian scans companies for data on energy efficiency, waste reduction, supply chain, and more.",
+    title: "Comprehensive Company Scan",
+    description: "Go beyond the surface. Veridian scans companies for data on energy efficiency, waste reduction, supply chain, and more.",
   },
   {
     title: "Detailed Factor Breakdown",
@@ -18,7 +18,7 @@ export const features = [
 export const faqs = [
   {
     question: "What is Veridian?",
-  answer: "Veridian is a tool that provides sustainability scores for companies. Our platform analyzes various factors, from energy consumption to ethical practices, giving you a clear picture of a company's environmental and social impact.",
+    answer: "Veridian is a tool that provides sustainability scores for companies. Our platform analyzes various factors, from energy consumption to ethical practices, giving you a clear picture of a company's environmental and social impact.",
   },
   {
     question: "How is the sustainability score calculated?",
@@ -34,6 +34,6 @@ export const faqs = [
   },
   {
     question: "How can I get started?",
-  answer: "Clicking the \"Get started\" button on our homepage will direct you to the appropriate web store to download the Veridian browser extension. Once installed, you can start scanning companies immediately.",
+    answer: "Clicking the \"Get started\" button on our homepage will direct you to the appropriate web store to download the Veridian browser extension. Once installed, you can start scanning companies immediately.",
   },
 ];
