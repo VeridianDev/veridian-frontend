@@ -12,7 +12,7 @@ export default function Footer() {
           Start Your Journey to Sustainability Today
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-lg text-primary-foreground/80">
-          Start making informed decisions. Add Veridian to
+          Start making informed decisions. Add EcoVeridian to
           your browser for free.
         </p>
         {/* Bottom bar with logo and copyright */}
@@ -20,7 +20,7 @@ export default function Footer() {
           <Logo className="text-primary-foreground" />
           <div className="flex flex-col items-center gap-2">
             <p className="text-sm text-primary-foreground/60">
-              &copy; 2025 Veridian. All rights reserved.
+              &copy; 2025 EcoVeridian. All rights reserved.
             </p>
             <p className="text-xs text-primary-foreground/50">
               Licensed under{" "}

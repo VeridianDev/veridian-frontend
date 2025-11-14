@@ -15,11 +15,11 @@ function FeatureShowcase() {
     <section className="py-20 sm:py-28">
       <div className="container text-center">
         <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-          How Veridian Works
+          How EcoVeridian Works
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
           Instantly analyze any company's sustainability with a single click.
-          Veridian gives you the data you need, right when you need it.
+          EcoVeridian gives you the data you need, right when you need it.
         </p>
         {/* CTA button */}
         <div className="mt-8 flex justify-center">

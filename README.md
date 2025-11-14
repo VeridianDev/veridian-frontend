@@ -1,4 +1,4 @@
-# Veridian
+# EcoVeridian
 
 ## Getting Started
 
@@ -18,11 +18,12 @@ Main code lives in `src/`:
 - `src/lib/` — Small utilities and data
 
 ## Code License
-This repository is licensed through the `GNU AFFERO GENERAL PUBLIC LICENSE`. More details are listed [here](https://github.com/VeridianDev/veridian-frontend/blob/main/LICENSE). 
+
+This repository is licensed through the `GNU AFFERO GENERAL PUBLIC LICENSE`. More details are listed [here](https://github.com/EcoVeridianDev/ecoveridian-frontend/blob/main/LICENSE). 
 
 ```
-VeridianDev/veridian-frontend: Veridian Website (Source Code)
-Copyright (C) 2025 Veridian
+EcoVeridianDev/ecoveridian-frontend: EcoVeridian Website (Source Code)
+Copyright (C) 2025 EcoVeridian
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published

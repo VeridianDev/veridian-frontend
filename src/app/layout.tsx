@@ -3,7 +3,7 @@ import "./globals.css";
 
 // Page metadata
 export const metadata: Metadata = {
-  title: "Veridian",
+  title: "EcoVeridian",
   description: "Unlock a company's sustainability potential with Veridian.",
 };
 

@@ -26,7 +26,7 @@ export default function Hero() {
         <div className="mt-14 flex justify-center">
           <Image
             src="/hero-showcase.jpg"
-            alt="Veridian dashboard"
+            alt="EcoVeridian dashboard"
             width={1200}
             height={700}
             className="rounded-xl border bg-card shadow-xl"

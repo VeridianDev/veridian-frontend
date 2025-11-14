@@ -6,7 +6,7 @@ export const features = [
   },
   {
     title: "Comprehensive Company Scan",
-    description: "Go beyond the surface. Veridian scans companies for data on energy efficiency, waste reduction, supply chain, and more.",
+    description: "Go beyond the surface. EcoVeridian scans companies for data on energy efficiency, waste reduction, supply chain, and more.",
   },
   {
     title: "Detailed Factor Breakdown",
@@ -17,8 +17,8 @@ export const features = [
 // FAQ content for landing page
 export const faqs = [
   {
-    question: "What is Veridian?",
-    answer: "Veridian is a tool that provides sustainability scores for companies. Our platform analyzes various factors, from energy consumption to ethical practices, giving you a clear picture of a company's environmental and social impact.",
+    question: "What is EcoVeridian?",
+    answer: "EcoVeridian is a tool that provides sustainability scores for companies. Our platform analyzes various factors, from energy consumption to ethical practices, giving you a clear picture of a company's environmental and social impact.",
   },
   {
     question: "How is the sustainability score calculated?",
@@ -30,10 +30,10 @@ export const faqs = [
   },
   {
     question: "What browsers are supported?",
-    answer: "The Veridian extension is currently available for Google Chrome, Mozilla Firefox, and Microsoft Edge. We are working on expanding to other browsers. (PLACEHOLDER FOR WHEN WE GO PUBLIC)",
+    answer: "The EcoVeridian extension is currently available for Google Chrome, Mozilla Firefox, and Microsoft Edge. We are working on expanding to other browsers. (PLACEHOLDER FOR WHEN WE GO PUBLIC)",
   },
   {
     question: "How can I get started?",
-    answer: "Clicking the \"Get started\" button on our homepage will direct you to the appropriate web store to download the Veridian browser extension. Once installed, you can start scanning companies immediately.",
+    answer: "Clicking the \"Get started\" button on our homepage will direct you to the appropriate web store to download the EcoVeridian browser extension. Once installed, you can start scanning companies immediately.",
   },
 ];

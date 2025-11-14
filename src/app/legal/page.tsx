@@ -13,9 +13,9 @@ export default function LegalPage() {
         <section className="mt-8 space-y-6">
           <h2 className="text-2xl font-bold">Copyright Notice</h2>
           <p className="text-muted-foreground">
-            Veridian Website (Source Code)
+            EcoVeridian Website (Source Code)
             <br />
-            Copyright &copy; 2025 Veridian
+            Copyright &copy; 2025 EcoVeridian
           </p>
 
           <h2 className="text-2xl font-bold">Open Source License</h2>
@@ -54,13 +54,13 @@ export default function LegalPage() {
 
           <div className="rounded-lg bg-muted p-4">
             <code className="text-sm">
-              https://github.com/VeridianDev/veridian-frontend
+              https://github.com/EcoVeridianDev/ecoveridian-frontend
             </code>
           </div>
 
           <div className="mt-6">
             <a
-              href="https://github.com/VeridianDev/veridian-frontend"
+              href="https://github.com/EcoVeridianDev/ecoveridian-frontend"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -73,10 +73,10 @@ export default function LegalPage() {
             If you have questions about licensing or need additional information,
             please contact us at{" "}
             <a
-              href="mailto:help@veridian.org"
+              href="mailto:help@ecoveridian.org"
               className="underline"
             >
-              help@veridian.org
+              help@ecoveridian.org
             </a>
             .
           </p>

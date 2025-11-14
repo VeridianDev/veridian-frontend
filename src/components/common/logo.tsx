@@ -9,14 +9,14 @@ export function Logo({ className }: { className?: string }) {
       {/* Logo icon */}
       <Image
         src="/logo.svg"
-        alt="Veridian Logo"
+        alt="EcoVeridian Logo"
         width={40}
         height={40}
         priority
       />
       {/* Logo text */}
       <span className="text-xl font-bold tracking-tight">
-        Veridian
+        EcoVeridian
       </span>
     </Link>
   );

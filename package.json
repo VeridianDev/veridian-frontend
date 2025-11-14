@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "license": "AGPL-3.0-or-later",
-  "author": "Veridian",
+  "author": "EcoVeridian",
   "repository": {
     "type": "git",
-    "url": "https://github.com/VeridianDev/veridian-frontend"
+    "url": "https://github.com/EcoVeridianDev/ecoveridian-frontend"
   },
   "scripts": {
     "dev": "next dev --turbopack",
