@@ -19,10 +19,10 @@ Main code lives in `src/`:
 
 ## Code License
 
-This repository is licensed through the `GNU AFFERO GENERAL PUBLIC LICENSE`. More details are listed [here](https://github.com/EcoVeridianDev/ecoveridian-frontend/blob/main/LICENSE). 
+This repository is licensed through the `GNU AFFERO GENERAL PUBLIC LICENSE`. More details are listed [here](https://github.com/EcoVeridian/ecoveridian-frontend/blob/main/LICENSE). 
 
 ```
-EcoVeridianDev/ecoveridian-frontend: EcoVeridian Website (Source Code)
+EcoVeridian/ecoveridian-frontend: EcoVeridian Website (Source Code)
 Copyright (C) 2025 EcoVeridian
 
 This program is free software: you can redistribute it and/or modify

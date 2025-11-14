@@ -6,7 +6,7 @@
   "author": "EcoVeridian",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EcoVeridianDev/ecoveridian-frontend"
+    "url": "https://github.com/EcoVeridian/ecoveridian-frontend"
   },
   "scripts": {
     "dev": "next dev --turbopack",

@@ -54,13 +54,13 @@ export default function LegalPage() {
 
           <div className="rounded-lg bg-muted p-4">
             <code className="text-sm">
-              https://github.com/EcoVeridianDev/ecoveridian-frontend
+              https://github.com/EcoVeridian/ecoveridian-frontend
             </code>
           </div>
 
           <div className="mt-6">
             <a
-              href="https://github.com/EcoVeridianDev/ecoveridian-frontend"
+              href="https://github.com/EcoVeridian/ecoveridian-frontend"
               target="_blank"
               rel="noopener noreferrer"
             >
