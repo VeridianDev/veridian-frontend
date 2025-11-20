@@ -45,7 +45,7 @@ export default function AuthPage() {
         if (error) {
           setError(error);
         } else if (user) {
-          setSuccess('Account created! A verification email has been sent to your inbox.');
+          setSuccess('Welcome! Please check your email to verify your account.');
           setTimeout(() => {
             router.push('/dashboard');
           }, 2000);

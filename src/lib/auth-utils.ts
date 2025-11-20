@@ -13,6 +13,7 @@ import {
   User,
 } from 'firebase/auth';
 import { auth } from './firebase';
+import { getFirebaseErrorMessage } from './firebase-error-messages';
 
 /**
  * Sign up a new user with email and password
@@ -36,7 +37,7 @@ export async function signUp(email: string, password: string) {
     
     return { user: userCredential.user, error: null };
   } catch (error: any) {
-    return { user: null, error: error.message };
+    return { user: null, error: getFirebaseErrorMessage(error) };
   }
 }
 
@@ -52,7 +53,7 @@ export async function signIn(email: string, password: string) {
     );
     return { user: userCredential.user, error: null };
   } catch (error: any) {
-    return { user: null, error: error.message };
+    return { user: null, error: getFirebaseErrorMessage(error) };
   }
 }
 
@@ -64,13 +65,13 @@ export async function logOut() {
     await signOut(auth);
     return { error: null };
   } catch (error: any) {
-    return { error: error.message };
+    return { error: getFirebaseErrorMessage(error) };
   }
 }
 
 /**
  * Update the current user's email address
- * Sends a verification email to the new email address
+ * Automatically sends a verification email to the new email address
  */
 export async function changeEmail(newEmail: string) {
   try {
@@ -81,23 +82,17 @@ export async function changeEmail(newEmail: string) {
     const oldEmail = auth.currentUser.email;
     await updateEmail(auth.currentUser, newEmail);
     
-    // Send verification email to the new email address
-    try {
-      await sendEmailVerification(auth.currentUser);
-    } catch (emailError) {
-      console.error('Failed to send verification email:', emailError);
-      // Don't fail the email change if verification email fails
-    }
+    // Firebase automatically sends a verification email to the new address
+    // No need to manually call sendEmailVerification
     
     return { error: null, oldEmail };
   } catch (error: any) {
-    return { error: error.message };
+    return { error: getFirebaseErrorMessage(error) };
   }
 }
 
 /**
  * Update the current user's password
- * Sends a notification email about the password change
  */
 export async function changePassword(newPassword: string) {
   try {
@@ -107,19 +102,9 @@ export async function changePassword(newPassword: string) {
     
     await updatePassword(auth.currentUser, newPassword);
     
-    // Send a password reset email as notification
-    // (Firebase doesn't have a dedicated "password changed" notification,
-    // so we send a verification email to confirm the change)
-    try {
-      await sendEmailVerification(auth.currentUser);
-    } catch (emailError) {
-      console.error('Failed to send notification email:', emailError);
-      // Don't fail the password change if notification email fails
-    }
-    
     return { error: null };
   } catch (error: any) {
-    return { error: error.message };
+    return { error: getFirebaseErrorMessage(error) };
   }
 }
 
@@ -138,7 +123,7 @@ export async function reauthenticate(currentPassword: string) {
     await reauthenticateWithCredential(auth.currentUser, credential);
     return { error: null };
   } catch (error: any) {
-    return { error: error.message };
+    return { error: getFirebaseErrorMessage(error) };
   }
 }
 
@@ -153,7 +138,7 @@ export async function deleteAccount() {
     await deleteUser(auth.currentUser);
     return { error: null };
   } catch (error: any) {
-    return { error: error.message };
+    return { error: getFirebaseErrorMessage(error) };
   }
 }
 
@@ -165,7 +150,7 @@ export async function sendPasswordReset(email: string) {
     await sendPasswordResetEmail(auth, email);
     return { error: null };
   } catch (error: any) {
-    return { error: error.message };
+    return { error: getFirebaseErrorMessage(error) };
   }
 }
 

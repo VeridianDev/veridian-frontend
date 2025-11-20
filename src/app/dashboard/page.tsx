@@ -5,6 +5,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import AccountSettings from '@/components/dashboard/AccountSettings';
 import ActivityHistory from '@/components/dashboard/ActivityHistory';
+import EmailVerificationBanner from '@/components/dashboard/EmailVerificationBanner';
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<'history' | 'settings'>('history');
@@ -14,6 +15,9 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-background">
         {/* Header */}
         <DashboardHeader />
+
+        {/* Email Verification Banner */}
+        <EmailVerificationBanner />
 
         {/* Main Content */}
         <main className="container mx-auto px-4 py-8 max-w-6xl">

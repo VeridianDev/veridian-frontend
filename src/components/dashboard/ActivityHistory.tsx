@@ -22,7 +22,6 @@ interface HistoryItem {
 
 export default function ActivityHistory() {
   const { user } = useAuth();
-  const [loading, setLoading] = useState(true);
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
 
   // Stats computed from history
@@ -37,58 +36,25 @@ export default function ActivityHistory() {
   const highScoreSites = historyData.filter((item) => item.ecoScore >= 70).length;
 
   useEffect(() => {
-    // TODO: Replace with actual Firestore query
-    // Example: query collection(`users/${user?.uid}/history`)
+    // TODO: Implement actual Firestore query when browser extension is ready
+    // Example: 
+    // const fetchHistory = async () => {
+    //   if (!user) return;
+    //   const historyRef = collection(db, `users/${user.uid}/history`);
+    //   const q = query(historyRef, orderBy('timestamp', 'desc'), limit(50));
+    //   const snapshot = await getDocs(q);
+    //   const data = snapshot.docs.map(doc => ({
+    //     id: doc.id,
+    //     ...doc.data(),
+    //     timestamp: doc.data().timestamp.toDate()
+    //   }));
+    //   setHistoryData(data);
+    //   setLoading(false);
+    // };
+    // fetchHistory();
     
-    // Mock data for demonstration
-    const mockData: HistoryItem[] = [
-      {
-        id: '1',
-        url: 'https://patagonia.com',
-        domain: 'patagonia.com',
-        ecoScore: 92,
-        timestamp: new Date('2024-11-15T10:30:00'),
-        category: 'Retail',
-      },
-      {
-        id: '2',
-        url: 'https://tesla.com',
-        domain: 'tesla.com',
-        ecoScore: 85,
-        timestamp: new Date('2024-11-14T15:45:00'),
-        category: 'Automotive',
-      },
-      {
-        id: '3',
-        url: 'https://example-corp.com',
-        domain: 'example-corp.com',
-        ecoScore: 58,
-        timestamp: new Date('2024-11-13T09:20:00'),
-        category: 'Technology',
-      },
-      {
-        id: '4',
-        url: 'https://greenenergy.com',
-        domain: 'greenenergy.com',
-        ecoScore: 95,
-        timestamp: new Date('2024-11-12T14:10:00'),
-        category: 'Energy',
-      },
-      {
-        id: '5',
-        url: 'https://fastfashion.com',
-        domain: 'fastfashion.com',
-        ecoScore: 42,
-        timestamp: new Date('2024-11-11T11:00:00'),
-        category: 'Retail',
-      },
-    ];
-
-    // Simulate loading delay
-    setTimeout(() => {
-      setHistoryData(mockData);
-      setLoading(false);
-    }, 500);
+    // For now, show empty state until extension populates data
+    setHistoryData([]);
   }, [user]);
 
   // Get score color
@@ -104,15 +70,6 @@ export default function ActivityHistory() {
     if (score >= 40) return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
     return 'bg-red-500/10 text-red-500 border-red-500/20';
   };
-
-  if (loading) {
-    return (
-      <div className="text-center py-12">
-        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
-        <p className="mt-4 text-muted-foreground">Loading activity...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-8">

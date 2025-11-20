@@ -60,13 +60,7 @@ export default function AccountSettings() {
     try {
       const { error } = await changeEmail(newEmail);
       if (error) {
-        if (error.includes('requires-recent-login')) {
-          setEmailError(
-            'This operation requires recent authentication. Please sign out and sign in again.'
-          );
-        } else {
-          setEmailError(error);
-        }
+        setEmailError(error);
       } else {
         setEmailSuccess(true);
         setNewEmail('');
@@ -106,7 +100,7 @@ export default function AccountSettings() {
       // First, re-authenticate
       const { error: reauthError } = await reauthenticate(currentPassword);
       if (reauthError) {
-        setPasswordError('Current password is incorrect');
+        setPasswordError(reauthError);
         setPasswordLoading(false);
         return;
       }
@@ -145,7 +139,7 @@ export default function AccountSettings() {
       // First, re-authenticate
       const { error: reauthError } = await reauthenticate(deletePassword);
       if (reauthError) {
-        setDeleteError('Password is incorrect');
+        setDeleteError(reauthError);
         setDeleteLoading(false);
         return;
       }
@@ -275,7 +269,7 @@ export default function AccountSettings() {
 
               {emailSuccess && (
                 <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500 text-sm">
-                  <strong>Email updated successfully!</strong> A verification email has been sent to your new address.
+                  <strong>Email updated successfully!</strong> Please verify your new email address by clicking the link sent to it.
                 </div>
               )}
 
@@ -356,7 +350,7 @@ export default function AccountSettings() {
 
               {passwordSuccess && (
                 <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500 text-sm">
-                  <strong>Password updated successfully!</strong> A confirmation email has been sent to your account.
+                  <strong>Password updated successfully!</strong> Your account is now secured with the new password.
                 </div>
               )}
 
