@@ -1,93 +1,61 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import PageLayout from "@/components/layout/page-layout";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import Navbar from '@/components/landing/navbar';
+import Footer from '@/components/landing/footer';
 
+// Legal information page
 export default function LegalPage() {
   return (
-    <PageLayout>
-      <div className="container mx-auto max-w-4xl px-4 py-16">
-        <h1 className="font-headline scroll-m-20 text-4xl font-extrabold tracking-tighter">
+    <main className="min-h-screen bg-background text-foreground">
+      <Navbar />
+      <div className="container mx-auto max-w-4xl px-4 py-24">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-12">
           Legal Information
         </h1>
 
-        <section className="mt-8 space-y-6">
-          <h2 className="text-2xl font-bold">Copyright Notice</h2>
-          <p className="text-muted-foreground">
-            EcoVeridian Website (Source Code)
-            <br />
-            Copyright &copy; 2025 EcoVeridian
-          </p>
-
-          <h2 className="text-2xl font-bold">Open Source License</h2>
-          <p className="text-muted-foreground">
-            This website is free software: you can redistribute it and/or modify
-            it under the terms of the GNU Affero General Public License as
-            published by the Free Software Foundation, either version 3 of the
-            License, or (at your option) any later version.
-          </p>
-          <p className="text-muted-foreground">
-            This program is distributed in the hope that it will be useful, but
-            WITHOUT ANY WARRANTY; without even the implied warranty of
-            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-            Affero General Public License for more details.
-          </p>
-
-          <div className="flex gap-4">
-            <a
-              href="https://www.gnu.org/licenses/agpl-3.0.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline">Read Full License</Button>
-            </a>
+        <section className="space-y-12">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">Copyright Notice</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              EcoVeridian Website
+              <br />
+              Copyright &copy; {new Date().getFullYear()} EcoVeridian
+              <br />
+              All rights reserved.
+            </p>
           </div>
 
-          <h2 className="text-2xl font-bold">Source Code Access</h2>
-          <p className="text-muted-foreground">
-            As required by the GNU Affero General Public License version 3, the
-            complete source code for this website is available for download.
-          </p>
-          <p className="text-muted-foreground">
-            You can access the source code, contribute, or learn more about this
-            project at:
-          </p>
-
-          <div className="rounded-lg bg-muted p-4">
-            <code className="text-sm">
-              https://github.com/EcoVeridian/ecoveridian-frontend
-            </code>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">Terms of Use</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              This website and its content are proprietary to EcoVeridian. Unauthorized copying, distribution, or modification of any part of this website is strictly prohibited.
+            </p>
           </div>
 
-          <div className="mt-6">
-            <a
-              href="https://github.com/EcoVeridian/ecoveridian-frontend"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button>View Source Code on GitHub</Button>
-            </a>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">Contact</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              If you have questions or need additional information, please contact us at{' '}
+              <a
+                href="mailto:help@ecoveridian.org"
+                className="underline hover:text-foreground transition-colors"
+              >
+                help@ecoveridian.org
+              </a>
+              .
+            </p>
           </div>
-
-          <h2 className="text-2xl font-bold mt-8">Questions?</h2>
-          <p className="text-muted-foreground">
-            If you have questions about licensing or need additional information,
-            please contact us at{" "}
-            <a
-              href="mailto:help@ecoveridian.org"
-              className="underline"
-            >
-              help@ecoveridian.org
-            </a>
-            .
-          </p>
         </section>
 
-        <div className="mt-12">
+        <div className="mt-16">
           <Link href="/">
-            <Button variant="outline">Back to Home</Button>
+            <Button variant="outline" className="rounded-full">
+              Back to Home
+            </Button>
           </Link>
         </div>
       </div>
-    </PageLayout>
+      <Footer />
+    </main>
   );
 }

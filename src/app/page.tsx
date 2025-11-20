@@ -1,15 +1,20 @@
-import PageLayout from "@/components/layout/page-layout";
-import Hero from "@/components/landing/hero";
-import Features from "@/components/landing/features";
-import Faq from "@/components/landing/faq";
+import Navbar from '@/components/landing/navbar';
+import Hero from '@/components/landing/hero';
+import UseCaseSelector from '@/components/landing/use-case-selector';
+import Features from '@/components/landing/features';
+import GridSection from '@/components/landing/grid-section';
+import Footer from '@/components/landing/footer';
 
-// Main landing page layout
+// Main landing page
 export default function Home() {
   return (
-    <PageLayout>
+    <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+      <Navbar />
       <Hero />
+      <UseCaseSelector />
       <Features />
-      <Faq />
-    </PageLayout>
+      <GridSection />
+      <Footer />
+    </main>
   );
 }

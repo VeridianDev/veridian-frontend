@@ -21,24 +21,27 @@
     --accent-foreground: 222 47% 11%;
     --border: 220 14% 90%;
     --input: 220 14% 90%;
+    --ring: 242 76% 58%;
     --radius: 0.5rem;
   }
-  /* Dark mode overrides */
+
+  /* Dark mode overrides (slightly darker) */
   .dark {
-    --background: 222 47% 11%;
+    --background: 222 47% 8%;
     --foreground: 220 17% 97%;
-    --card: 222 47% 11%;
+    --card: 222 47% 8%;
     --card-foreground: 220 17% 97%;
     --primary: 242 76% 58%;
     --primary-foreground: 220 17% 97%;
-    --secondary: 220 14% 20%;
+    --secondary: 220 14% 15%;
     --secondary-foreground: 220 17% 97%;
-    --muted: 220 14% 15%;
+    --muted: 220 14% 12%;
     --muted-foreground: 220 17% 80%;
-    --accent: 220 14% 20%;
+    --accent: 220 14% 15%;
     --accent-foreground: 220 17% 97%;
-    --border: 220 14% 25%;
-    --input: 220 14% 25%;
+    --border: 220 14% 20%;
+    --input: 220 14% 20%;
+    --ring: 242 76% 58%;
   }
 }
 
@@ -47,7 +50,35 @@
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight font-bold;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Glassmorphism utility */
+  .glass {
+    @apply bg-background/80 backdrop-blur-md border-b border-border;
   }
 }

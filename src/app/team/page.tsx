@@ -1,35 +1,36 @@
-
-import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import PageLayout from "@/components/layout/page-layout";
+import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Navbar from '@/components/landing/navbar';
+import Footer from '@/components/landing/footer';
 
 // Team member data
 const teamMembers = [
   {
-    name: "Risith",
-    imageUrl: "/risith-portrait.jpg",
-    alt: "Portrait of Risith",
+    name: 'Risith Kankanamge',
+    imageUrl: '/risith-portrait.jpg',
+    alt: 'Portrait of Risith',
   },
   {
-    name: "Santhosh",
-    imageUrl: "/santhosh-portrait.jpg",
-    alt: "Portrait of Santhosh",
+    name: 'Santhosh',
+    imageUrl: '/santhosh-portrait.jpg',
+    alt: 'Portrait of Santhosh',
   },
   {
-    name: "Ritvik",
-    imageUrl: "/ritvik-portrait.jpg",
-    alt: "Portrait of Ritvik",
+    name: 'Ritvik',
+    imageUrl: '/ritvik-portrait.jpg',
+    alt: 'Portrait of Ritvik',
   },
 ];
 
 // Team page
 export default function TeamPage() {
   return (
-    <PageLayout>
+    <main className="min-h-screen bg-background text-foreground">
+      <Navbar />
       <section className="py-20 sm:py-28">
-        <div className="container">
+        <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Meet the Team
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
@@ -45,16 +46,18 @@ export default function TeamPage() {
               >
                 {/* Portrait image */}
                 <CardHeader className="p-0 pt-6">
-                  <Image
-                    src={member.imageUrl}
-                    alt={member.alt}
-                    width={150}
-                    height={150}
-                    className="mx-auto rounded-full object-cover"
-                  />
+                  <div className="relative w-[150px] h-[150px] mx-auto">
+                    <Image
+                      src={member.imageUrl}
+                      alt={member.alt}
+                      fill
+                      className="rounded-full object-cover"
+                      sizes="150px"
+                    />
+                  </div>
                 </CardHeader>
                 <CardContent className="flex flex-1 flex-col p-6">
-                  <CardTitle className="font-headline text-xl font-bold">
+                  <CardTitle className="text-xl font-bold">
                     {member.name}
                   </CardTitle>
                 </CardContent>
@@ -63,6 +66,7 @@ export default function TeamPage() {
           </div>
         </div>
       </section>
-    </PageLayout>
+      <Footer />
+    </main>
   );
 }
