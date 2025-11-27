@@ -1,12 +1,22 @@
+'use client';
+
 import { Logo } from '@/components/common/logo';
 import Link from 'next/link';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 // Footer section with CTA and two-column navigation
 export default function Footer() {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
     <footer className="bg-background border-t border-border py-16 px-4">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center">
+        <div
+          ref={ref}
+          className={`text-center ${
+            isVisible ? 'scroll-animate-visible' : 'scroll-animate'
+          }`}
+        >
           {/* Final CTA section */}
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
             Start Your Journey to Sustainability Today

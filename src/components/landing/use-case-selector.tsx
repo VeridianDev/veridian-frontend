@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { faqs } from '@/lib/data';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 // FAQ section with interactive sidebar layout
 export default function UseCaseSelector() {
   // Track selected FAQ index
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section className="py-20 sm:py-28">
@@ -24,16 +26,21 @@ export default function UseCaseSelector() {
         </div>
 
         {/* Two-column layout - questions left, answer right */}
-        <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div
+          ref={ref}
+          className={`mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-12 ${
+            isVisible ? 'scroll-animate-visible' : 'scroll-animate'
+          }`}
+        >
           {/* Left sidebar - Question list */}
           <div className="lg:col-span-1 space-y-2">
             {faqs.map((faq, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedIndex(index)}
-                className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
+                className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
                   selectedIndex === index
-                    ? 'bg-primary text-primary-foreground font-medium'
+                    ? 'bg-primary text-primary-foreground font-medium scale-hover'
                     : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
                 }`}
               >
@@ -44,7 +51,7 @@ export default function UseCaseSelector() {
 
           {/* Right panel - Selected answer */}
           <div className="lg:col-span-2">
-            <div className="rounded-2xl border border-border bg-secondary/20 p-8">
+            <div className="rounded-2xl border border-border bg-secondary/20 p-8 eco-card-hover">
               {/* Answer label */}
               <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
                 <CheckCircleIcon className="w-5 h-5" />

@@ -1,4 +1,7 @@
+'use client';
+
 import { features } from '@/lib/data';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 // Features section with alternating text and image layout
 export default function Features() {
@@ -10,12 +13,35 @@ export default function Features() {
           {features.map((feature, index) => {
             const isEven = index % 2 === 0;
             return (
-              <div
+              <FeatureItem
                 key={feature.title}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  isEven ? '' : 'lg:flex-row-reverse'
-                }`}
-              >
+                feature={feature}
+                isEven={isEven}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeatureItem({
+  feature,
+  isEven,
+}: {
+  feature: { title: string; description: string };
+  isEven: boolean;
+}) {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <div
+      ref={ref}
+      className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+        isEven ? '' : 'lg:flex-row-reverse'
+      } ${isVisible ? 'scroll-animate-visible' : 'scroll-animate'}`}
+    >
                 {/* Text content */}
                 <div className={isEven ? 'lg:pr-12' : 'lg:pl-12 lg:order-2'}>
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
@@ -26,19 +52,14 @@ export default function Features() {
                   </p>
                 </div>
 
-                {/* Visual placeholder */}
-                <div className={isEven ? '' : 'lg:order-1'}>
-                  <div className="aspect-video rounded-2xl border border-border bg-secondary/20 flex items-center justify-center">
-                    <p className="text-muted-foreground text-sm">
-                      [Visual for: {feature.title}]
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+      {/* Visual placeholder */}
+      <div className={isEven ? '' : 'lg:order-1'}>
+        <div className="aspect-video rounded-2xl border border-border bg-secondary/20 flex items-center justify-center eco-card-hover">
+          <p className="text-muted-foreground text-sm">
+            [Visual for: {feature.title}]
+          </p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './animations.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
