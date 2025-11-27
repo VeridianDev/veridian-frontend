@@ -30,6 +30,15 @@
   }
 }
 
+@keyframes letterWave {
+  0%, 100% {
+    color: hsl(var(--foreground));
+  }
+  50% {
+    color: hsl(242, 76%, 58%);
+  }
+}
+
 /* Animation classes */
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
@@ -41,6 +50,10 @@
 
 .animate-scale-in {
   animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-letter-wave {
+  animation: letterWave 3s ease-in-out infinite;
 }
 
 /* Initial state for scroll animations */

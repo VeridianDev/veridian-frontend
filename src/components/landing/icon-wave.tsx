@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import {
-  BeakerIcon,
   GlobeAltIcon,
-  SparklesIcon,
-  FireIcon,
+  SunIcon,
+  MagnifyingGlassIcon,
   LightBulbIcon,
   ShieldCheckIcon,
   ChartBarIcon,
-  HeartIcon,
+  CloudIcon,
 } from '@heroicons/react/24/outline';
 
 // Wave animation component with circular icons
@@ -22,18 +21,18 @@ export default function IconWave() {
 
   // Icons to display in the wave
   const icons = [
-    FireIcon,
+    CloudIcon,
     GlobeAltIcon,
-    SparklesIcon,
-    BeakerIcon,
+    SunIcon,
+    MagnifyingGlassIcon,
     LightBulbIcon,
     ShieldCheckIcon,
     ChartBarIcon,
-    HeartIcon,
-    FireIcon,
+    ShieldCheckIcon,
+    CloudIcon,
     GlobeAltIcon,
-    SparklesIcon,
-    BeakerIcon,
+    SunIcon,
+    MagnifyingGlassIcon,
   ];
 
   useEffect(() => {
@@ -85,8 +84,22 @@ export default function IconWave() {
       {/* Hero text above icon wave */}
       <div className="container">
         <div className="max-w-3xl mb-16 ml-12">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight leading-tight text-foreground">
-            EcoVeridian is our next-generation eco-innovation hub, shaping how communities build a greener future.
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight leading-tight">
+            {isMounted ? (
+              'EcoVeridian is our next-generation eco-innovation hub, shaping how communities build a greener future.'.split('').map((char, index) => (
+                <span
+                  key={index}
+                  className="animate-letter-wave"
+                  style={{
+                    animationDelay: `${index * 0.03}s`,
+                  }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))
+            ) : (
+              'EcoVeridian is our next-generation eco-innovation hub, shaping how communities build a greener future.'
+            )}
           </h2>
         </div>
       </div>
