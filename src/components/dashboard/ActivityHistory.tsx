@@ -9,151 +9,181 @@ import {
   ClockIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline';
-import { fetchDashboardData } from '@/lib/dashboard';
-
-// Mock data type (will be replaced with real Firestore data)
-interface HistoryItem {
-  id: string;
-  url: string;
-  domain: string;
-  ecoScore: number;
-  timestamp: Date;
-  category: string;
-}
+import { getUserDashboardData } from '@/lib/dashboard';
+import type { DashboardStats, AnalysisHistory } from '@/types/dashboard';
 
 export default function ActivityHistory() {
   const { user } = useAuth();
-  const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
-  const [stats, setStats] = useState<{ totalSitesAnalyzed: number; averageEcoScore: number; highScoreSites: number } | null>(null);
-
-  // Stats computed from history
-  const totalSites = historyData.length;
-  const avgEcoScore =
-    historyData.length > 0
-      ? Math.round(
-          historyData.reduce((sum, item) => sum + item.ecoScore, 0) /
-            historyData.length
-        )
-      : 0;
-  const highScoreSites = historyData.filter((item) => item.ecoScore >= 70).length;
+  const [history, setHistory] = useState<AnalysisHistory[]>([]);
+  const [stats, setStats] = useState<DashboardStats>({
+    totalSitesAnalyzed: 0,
+    averageEcoScore: 0,
+    highScoreSites: 0,
+  });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setHistoryData([]);
     const load = async () => {
+      setLoading(true);
       if (!user) {
-        setHistoryData([]);
-        setStats(null);
+        setHistory([]);
+        setStats({ totalSitesAnalyzed: 0, averageEcoScore: 0, highScoreSites: 0 });
+        setLoading(false);
         return;
       }
 
       try {
-        const res = await fetchDashboardData();
+        const res = await getUserDashboardData();
         if (!res) {
-          setHistoryData([]);
-          setStats(null);
-          return;
+          setHistory([]);
+          setStats({ totalSitesAnalyzed: 0, averageEcoScore: 0, highScoreSites: 0 });
+        } else {
+          setStats(res.stats);
+          setHistory(res.history);
         }
-
-        // normalize stats
-        const s = res.stats || { totalSitesAnalyzed: 0, averageEcoScore: 0, highScoreSites: 0 };
-        setStats({
-          totalSitesAnalyzed: s.totalSitesAnalyzed ?? 0,
-          averageEcoScore: s.averageEcoScore ?? 0,
-          highScoreSites: s.highScoreSites ?? 0,
-        });
-
-        // normalize history items
-        const normalized = (res.history || []).map((h: any) => ({
-          id: h.id,
-          url: h.url || h.site || '',
-          domain: h.domain || h.hostname || (h.url ? (() => { try { return new URL(h.url).hostname } catch { return h.site || '' } })() : '') || h.site || '',
-          ecoScore: typeof h.ecoScore === 'number' ? h.ecoScore : Number(h.ecoScore) || 0,
-          timestamp: h.timestamp && typeof h.timestamp.toDate === 'function' ? h.timestamp.toDate() : h.timestamp ? new Date(h.timestamp) : new Date(),
-          category: h.category || h.label || 'Unknown',
-        }));
-
-        setHistoryData(normalized);
       } catch (err) {
         console.error('Error loading dashboard data', err);
-        setHistoryData([]);
-        setStats(null);
+        setHistory([]);
+        setStats({ totalSitesAnalyzed: 0, averageEcoScore: 0, highScoreSites: 0 });
+      } finally {
+        setLoading(false);
       }
     };
 
     load();
   }, [user]);
 
-  // Get score color
+  // Get score color (EcoVeridian theme: Green >80, Yellow 50-79, Red <50)
   const getScoreColor = (score: number) => {
-    if (score >= 70) return 'text-green-500';
-    if (score >= 40) return 'text-yellow-500';
+    if (score >= 80) return 'text-green-500';
+    if (score >= 50) return 'text-yellow-500';
     return 'text-red-500';
   };
 
-  // Get score badge color
+  // Get score badge styling
   const getScoreBadgeColor = (score: number) => {
-    if (score >= 70) return 'bg-green-500/10 text-green-500 border-green-500/20';
-    if (score >= 40) return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
+    if (score >= 80) return 'bg-green-500/10 text-green-500 border-green-500/20';
+    if (score >= 50) return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
     return 'bg-red-500/10 text-red-500 border-red-500/20';
   };
+
+  // Get grade badge styling
+  const getGradeBadgeColor = (grade: string) => {
+    if (grade.startsWith('A')) return 'bg-green-500/10 text-green-500 border-green-500/20';
+    if (grade.startsWith('B')) return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
+    return 'bg-red-500/10 text-red-500 border-red-500/20';
+  };
+
+  // Format timestamp
+  const formatDate = (ts: any): string => {
+    if (!ts) return 'N/A';
+    const date = typeof ts.toDate === 'function' ? ts.toDate() : new Date(ts);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
+
+  // Skeleton loader for stats cards
+  const StatSkeleton = () => (
+    <Card className="p-6 shadow-sm animate-pulse">
+      <div className="flex items-start gap-4">
+        <div className="p-3 bg-muted rounded-lg w-12 h-12" />
+        <div className="flex-1">
+          <div className="h-4 bg-muted rounded w-24 mb-2" />
+          <div className="h-8 bg-muted rounded w-16" />
+        </div>
+      </div>
+    </Card>
+  );
+
+  // Skeleton loader for table rows
+  const TableSkeleton = () => (
+    <div className="space-y-3">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="flex items-center gap-4 py-4 px-4 animate-pulse">
+          <div className="flex-1">
+            <div className="h-4 bg-muted rounded w-32 mb-2" />
+            <div className="h-3 bg-muted rounded w-48" />
+          </div>
+          <div className="h-6 bg-muted rounded w-12" />
+          <div className="h-6 bg-muted rounded w-10" />
+          <div className="h-4 bg-muted rounded w-24" />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className="space-y-8">
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Total Sites Analyzed */}
-        <Card className="p-6 shadow-sm">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <GlobeAltIcon className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground mb-1">
-                Total Sites Analyzed
-              </p>
-              <p className="text-3xl font-bold">{totalSites}</p>
-            </div>
-          </div>
-        </Card>
+        {loading ? (
+          <>
+            <StatSkeleton />
+            <StatSkeleton />
+            <StatSkeleton />
+          </>
+        ) : (
+          <>
+            {/* Total Sites Analyzed */}
+            <Card className="p-6 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 rounded-lg">
+                  <GlobeAltIcon className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Total Sites Analyzed
+                  </p>
+                  <p className="text-3xl font-bold">{stats.totalSitesAnalyzed}</p>
+                </div>
+              </div>
+            </Card>
 
-        {/* Average Eco Score */}
-        <Card className="p-6 shadow-sm">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <ChartBarIcon className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground mb-1">
-                Average Eco Score
-              </p>
-              <p className={`text-3xl font-bold ${getScoreColor(avgEcoScore)}`}>
-                {avgEcoScore}
-              </p>
-            </div>
-          </div>
-        </Card>
+            {/* Average Eco Score */}
+            <Card className="p-6 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 rounded-lg">
+                  <ChartBarIcon className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Average Eco Score
+                  </p>
+                  <p className={`text-3xl font-bold ${getScoreColor(stats.averageEcoScore)}`}>
+                    {Math.round(stats.averageEcoScore)}
+                  </p>
+                </div>
+              </div>
+            </Card>
 
-        {/* High Score Sites */}
-        <Card className="p-6 shadow-sm">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <SparklesIcon className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground mb-1">
-                High Score Sites
-              </p>
-              <p className="text-3xl font-bold text-green-500">{highScoreSites}</p>
-            </div>
-          </div>
-        </Card>
+            {/* High Score Sites */}
+            <Card className="p-6 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 rounded-lg">
+                  <SparklesIcon className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    High Score Sites
+                  </p>
+                  <p className="text-3xl font-bold text-green-500">{stats.highScoreSites}</p>
+                </div>
+              </div>
+            </Card>
+          </>
+        )}
       </div>
 
       {/* History Table */}
       <Card className="p-6 shadow-sm">
         <h2 className="text-xl font-semibold mb-6">Analysis History</h2>
 
-        {historyData.length === 0 ? (
+        {loading ? (
+          <TableSkeleton />
+        ) : history.length === 0 ? (
           <div className="text-center py-12">
             <GlobeAltIcon className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
             <p className="text-muted-foreground mb-2">No analysis history yet</p>
@@ -168,13 +198,13 @@ export default function ActivityHistory() {
               <thead>
                 <tr className="border-b border-border">
                   <th className="text-left py-3 px-4 font-medium text-sm text-muted-foreground">
-                    Website
-                  </th>
-                  <th className="text-left py-3 px-4 font-medium text-sm text-muted-foreground">
-                    Category
+                    Company
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-sm text-muted-foreground">
-                    Eco Score
+                    Score
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-sm text-muted-foreground">
+                    Grade
                   </th>
                   <th className="text-left py-3 px-4 font-medium text-sm text-muted-foreground">
                     Date
@@ -182,39 +212,37 @@ export default function ActivityHistory() {
                 </tr>
               </thead>
               <tbody>
-                {historyData.map((item) => (
+                {history.map((item) => (
                   <tr
                     key={item.id}
                     className="border-b border-border hover:bg-secondary/50 transition-colors"
                   >
                     <td className="py-4 px-4">
                       <div>
-                        <p className="font-medium">{item.domain}</p>
+                        <p className="font-medium">{item.companyName}</p>
                         <p className="text-sm text-muted-foreground truncate max-w-xs">
-                          {item.url}
+                          {item.domain}
                         </p>
                       </div>
                     </td>
-                    <td className="py-4 px-4">
-                      <span className="inline-block px-3 py-1 text-xs font-medium bg-secondary rounded-full">
-                        {item.category}
+                    <td className="py-4 px-4 text-center">
+                      <span
+                        className={`inline-block px-3 py-1 text-sm font-bold border rounded-full ${getScoreBadgeColor(item.score)}`}
+                      >
+                        {item.score}
                       </span>
                     </td>
                     <td className="py-4 px-4 text-center">
                       <span
-                        className={`inline-block px-3 py-1 text-sm font-bold border rounded-full ${getScoreBadgeColor(item.ecoScore)}`}
+                        className={`inline-block px-3 py-1 text-sm font-bold border rounded-full ${getGradeBadgeColor(item.grade)}`}
                       >
-                        {item.ecoScore}
+                        {item.grade}
                       </span>
                     </td>
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <ClockIcon className="w-4 h-4" />
-                        {item.timestamp.toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
+                        {formatDate(item.timestamp)}
                       </div>
                     </td>
                   </tr>
