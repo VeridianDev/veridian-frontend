@@ -9,6 +9,7 @@ import {
   ClockIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline';
+import { fetchDashboardData } from '@/lib/dashboard';
 
 // Mock data type (will be replaced with real Firestore data)
 interface HistoryItem {
@@ -23,6 +24,7 @@ interface HistoryItem {
 export default function ActivityHistory() {
   const { user } = useAuth();
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
+  const [stats, setStats] = useState<{ totalSitesAnalyzed: number; averageEcoScore: number; highScoreSites: number } | null>(null);
 
   // Stats computed from history
   const totalSites = historyData.length;
@@ -36,25 +38,49 @@ export default function ActivityHistory() {
   const highScoreSites = historyData.filter((item) => item.ecoScore >= 70).length;
 
   useEffect(() => {
-    // TODO: Implement actual Firestore query when browser extension is ready
-    // Example: 
-    // const fetchHistory = async () => {
-    //   if (!user) return;
-    //   const historyRef = collection(db, `users/${user.uid}/history`);
-    //   const q = query(historyRef, orderBy('timestamp', 'desc'), limit(50));
-    //   const snapshot = await getDocs(q);
-    //   const data = snapshot.docs.map(doc => ({
-    //     id: doc.id,
-    //     ...doc.data(),
-    //     timestamp: doc.data().timestamp.toDate()
-    //   }));
-    //   setHistoryData(data);
-    //   setLoading(false);
-    // };
-    // fetchHistory();
-    
-    // For now, show empty state until extension populates data
     setHistoryData([]);
+    const load = async () => {
+      if (!user) {
+        setHistoryData([]);
+        setStats(null);
+        return;
+      }
+
+      try {
+        const res = await fetchDashboardData();
+        if (!res) {
+          setHistoryData([]);
+          setStats(null);
+          return;
+        }
+
+        // normalize stats
+        const s = res.stats || { totalSitesAnalyzed: 0, averageEcoScore: 0, highScoreSites: 0 };
+        setStats({
+          totalSitesAnalyzed: s.totalSitesAnalyzed ?? 0,
+          averageEcoScore: s.averageEcoScore ?? 0,
+          highScoreSites: s.highScoreSites ?? 0,
+        });
+
+        // normalize history items
+        const normalized = (res.history || []).map((h: any) => ({
+          id: h.id,
+          url: h.url || h.site || '',
+          domain: h.domain || h.hostname || (h.url ? (() => { try { return new URL(h.url).hostname } catch { return h.site || '' } })() : '') || h.site || '',
+          ecoScore: typeof h.ecoScore === 'number' ? h.ecoScore : Number(h.ecoScore) || 0,
+          timestamp: h.timestamp && typeof h.timestamp.toDate === 'function' ? h.timestamp.toDate() : h.timestamp ? new Date(h.timestamp) : new Date(),
+          category: h.category || h.label || 'Unknown',
+        }));
+
+        setHistoryData(normalized);
+      } catch (err) {
+        console.error('Error loading dashboard data', err);
+        setHistoryData([]);
+        setStats(null);
+      }
+    };
+
+    load();
   }, [user]);
 
   // Get score color
