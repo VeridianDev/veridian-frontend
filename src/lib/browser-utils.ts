@@ -31,10 +31,10 @@ export function detectBrowser(): 'chrome' | 'edge' | 'other' {
 export function getExtensionUrl(browser: 'chrome' | 'edge' | 'other'): string | null {
   switch (browser) {
     case 'chrome':
-      // Chrome Web Store URL - replace with your actual extension ID
+      // Chrome Web Store URL - replace with actual extension ID
       return 'https://chrome.google.com/webstore/category/extensions';
     case 'edge':
-      // Microsoft Edge Add-ons URL - replace with your actual extension ID
+      // Microsoft Edge Add-ons URL - replace with actual extension ID
       return 'https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home';
     case 'other':
       return null; // No URL for unsupported browsers

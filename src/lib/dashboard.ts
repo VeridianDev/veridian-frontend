@@ -13,19 +13,19 @@ import type { DashboardData, DashboardStats, AnalysisHistory } from '@/types/das
 export async function getUserDashboardData(): Promise<DashboardData | null> {
   const user = auth.currentUser;
   if (!user) {
-    console.log('getUserDashboardData: No user logged in');
+    // console.log('getUserDashboardData: No user logged in');
     return null;
   }
 
-  console.log('getUserDashboardData: Fetching for user UID:', user.uid);
+  // console.log('getUserDashboardData: Fetching for user UID:', user.uid);
 
   try {
     // 1. Fetch user stats document
     const userDocRef = doc(db, 'users', user.uid);
-    console.log('Fetching stats from path:', `users/${user.uid}`);
+    // console.log('Fetching stats from path:', `users/${user.uid}`);
     const statsSnap = await getDoc(userDocRef);
     const rawStats = statsSnap.exists() ? statsSnap.data() : null;
-    console.log('Stats document exists:', statsSnap.exists(), rawStats);
+    // console.log('Stats document exists:', statsSnap.exists(), rawStats);
 
     const stats: DashboardStats = rawStats
       ? {
@@ -41,16 +41,16 @@ export async function getUserDashboardData(): Promise<DashboardData | null> {
     // 2. Fetch history subcollection WITHOUT orderBy (to avoid missing field issues)
     // Sort client-side instead
     const historyPath = `users/${user.uid}/history`;
-    console.log('Fetching history from path:', historyPath);
+    // console.log('Fetching history from path:', historyPath);
     const historyRef = collection(db, 'users', user.uid, 'history');
     const historySnap = await getDocs(historyRef);
     
-    console.log('History collection size:', historySnap.size);
-    console.log('History docs:', historySnap.docs.map(d => d.id));
+    // console.log('History collection size:', historySnap.size);
+    // console.log('History docs:', historySnap.docs.map(d => d.id));
 
     const history: AnalysisHistory[] = historySnap.docs.map((d) => {
       const data = d.data();
-      console.log('History doc:', d.id, data);
+      // console.log('History doc:', d.id, data);
       return {
         id: d.id,
         domain: data.domain ?? d.id,
@@ -86,7 +86,7 @@ export async function getUserDashboardData(): Promise<DashboardData | null> {
       return getTime(b.timestamp) - getTime(a.timestamp);
     });
 
-    console.log('Dashboard data loaded:', { stats, historyCount: history.length });
+    // console.log('Dashboard data loaded:', { stats, historyCount: history.length });
     return { stats, history };
   } catch (err) {
     console.error('getUserDashboardData error:', err);

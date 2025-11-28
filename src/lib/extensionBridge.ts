@@ -3,7 +3,7 @@
  * Handles communication between the website and browser extension
  */
 
-const EXTENSION_ID = "bmfbcdnooeejjlhnpgbmijnjkepmlaaf"; // Replace with the actual one after demo: jpmehcioggeadmlndekobedppcoiiaop
+const EXTENSION_ID = "jpmehcioggeadmlndekobedppcoiiaop";
 
 /**
  * Sync the Firebase auth token to the extension
@@ -23,7 +23,7 @@ export async function syncAuthToExtension(
       token,
       user,
     });
-    console.log(response?.success ? "Auth synced to Extension" : "Extension sync failed");
+    // console.log(response?.success ? "Auth synced to Extension" : "Extension sync failed");
     return response?.success || false;
   } catch (error) {
     // Extension likely not installed
