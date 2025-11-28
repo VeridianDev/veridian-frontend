@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRightIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { detectBrowser, getExtensionUrl } from '@/lib/browser-utils';
+import InteractiveBackground from '@/components/landing/interactive-background';
 
 // Hero section - main headline and CTA
 export default function Hero() {
@@ -30,8 +31,11 @@ export default function Hero() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4">
-      <div className="container mx-auto max-w-5xl text-center">
+    <section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Interactive cursor-reactive background */}
+      <InteractiveBackground />
+      
+      <div className="container mx-auto max-w-5xl text-center relative z-10">
         {/* Main headline */}
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 animate-fade-in-up animate-delay-100 opacity-0 animation-fill-both">
           Clarity in Corporate <br className="hidden md:block" />
