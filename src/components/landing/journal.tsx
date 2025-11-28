@@ -31,7 +31,7 @@ export default function Journal() {
   ];
 
   return (
-    <section className="py-20 sm:py-28 bg-secondary/20">
+    <section className="py-20 sm:py-28">
       <div className="container">
         {/* Section heading */}
         <div className="mx-auto max-w-2xl text-center mb-16">

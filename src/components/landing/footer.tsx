@@ -34,19 +34,19 @@ export default function Footer() {
                 <h3 className="font-semibold text-foreground">Resources</h3>
                 <Link
                   href="/team"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Team
                 </Link>
                 <Link
                   href="/legal"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Legal
                 </Link>
                 <Link
                   href="/privacy"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Privacy Policy
                 </Link>
