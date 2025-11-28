@@ -66,12 +66,19 @@ export default function Footer() {
                   All rights reserved.
                 </p>
                 {/* Legal links */}
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground space-x-3">
                   <Link
                     href="/legal"
                     className="underline hover:text-foreground transition-colors"
                   >
                     Legal
+                  </Link>
+                  <span>•</span>
+                  <Link
+                    href="/privacy"
+                    className="underline hover:text-foreground transition-colors"
+                  >
+                    Privacy Policy
                   </Link>
                 </p>
               </div>

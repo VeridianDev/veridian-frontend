@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
@@ -372,7 +373,10 @@ export default function AccountSettings() {
             <h2 className="text-xl font-semibold mb-2 text-red-500">Delete Account</h2>
             <p className="text-muted-foreground mb-4">
               Permanently delete your account and all associated data. This action cannot be
-              undone.
+              undone. For more information about data deletion, see our{' '}
+              <Link href="/privacy" className="text-primary hover:underline">
+                Privacy Policy
+              </Link>.
             </p>
 
             {!showDeleteConfirm ? (
