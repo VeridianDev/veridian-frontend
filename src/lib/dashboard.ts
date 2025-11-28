@@ -40,7 +40,6 @@ export async function getUserDashboardData(): Promise<DashboardData | null> {
 
     // 2. Fetch history subcollection WITHOUT orderBy (to avoid missing field issues)
     // Sort client-side instead
-    const historyPath = `users/${user.uid}/history`;
     // console.log('Fetching history from path:', historyPath);
     const historyRef = collection(db, 'users', user.uid, 'history');
     const historySnap = await getDocs(historyRef);
